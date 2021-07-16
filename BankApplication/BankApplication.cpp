@@ -3,6 +3,7 @@
 using namespace std;
 
 int user_choice;
+int number_of_last_user = 0;
 
 // printing the interval of right anwser of user
 void ErrorMessageNumberMustBeInInterval(int beginnig_of_interval, int ending_of_interval)
@@ -30,6 +31,35 @@ void ShowMainMenuWithGreeting()
 	ShowMainMenu();
 }
 
+void ShowMenuOperationsWithUserAccount()
+{	
+	cout << "Operations with user account" << endl;
+	cout << "Input the choice:" << endl;
+	cout << "1) Create an account\n2) Check account balance\n3) Check card balance" << endl;
+	cout << "4) Find out the status of your account" << endl;
+}
+
+void CaseOperationsWithUserAccount()
+{
+	system("cls");
+	ShowMenuOperationsWithUserAccount();
+	cin >> user_choice;
+	if (user_choice > 4 || user_choice < 1)
+	{
+		while (true)
+		{
+			system("cls");
+			ErrorMessageNumberMustBeInInterval(0, 5);
+			ShowMainMenu();
+			cin >> user_choice;
+			if (user_choice < 5 && user_choice > 0)
+			{
+				break;
+			}
+		}
+	}
+}
+
 void Navigation()
 {
 	ShowMainMenuWithGreeting();
@@ -40,13 +70,21 @@ void Navigation()
 		{
 			system("cls");
 			ErrorMessageNumberMustBeInInterval(0, 4);
-			ShowMainMenuWithGreeting();
+			ShowMainMenu();
 			cin >> user_choice;
-			if (user_choice < 4 || user_choice > 0)
+			if (user_choice < 4 && user_choice > 0)
 			{
 				break;
 			}
 		}
+	}
+	switch (user_choice)
+	{
+	case 3:
+		CaseOperationsWithUserAccount();
+		break;
+	default:
+		break;
 	}
 }
 
@@ -69,6 +107,8 @@ private:
 
 BankAccount::BankAccount()
 {
+	this->_bank_account_balance = 0;
+	this->_id = number_of_last_user;
 }
 
 BankAccount::~BankAccount()
@@ -108,6 +148,7 @@ class UserAccount
 {
 public:
 	UserAccount();
+	UserAccount(string name_of_user, string surname_of_user, string patronymic_of_user);
 	~UserAccount();
 private:
 	string _name_of_user;
@@ -127,8 +168,12 @@ private:
 	int _status;
 };
 
-UserAccount::UserAccount()
+UserAccount::UserAccount(string name_of_user, string surname_of_user, string patronymic_of_user)
 {
+	this->_status = 0;
+	this->_name_of_user = name_of_user;
+	this->_patronymic_of_user = patronymic_of_user;
+	this->_surname_of_user = surname_of_user;
 }
 
 UserAccount::~UserAccount()
